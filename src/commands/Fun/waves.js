@@ -10,7 +10,7 @@ const axios = require('axios');
  * CustomCommand command
  * @extends {Command}
 */
-class hugs extends Command {
+class wave extends Command {
 	/**
       * @param {Client} client The instantiating client
       * @param {CommandData} data The data for the command
