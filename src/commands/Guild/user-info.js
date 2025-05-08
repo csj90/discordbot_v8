@@ -109,6 +109,7 @@ class UserInfo extends Command {
 		let isAdministrator = false;
 		let isModerator = false;
 		let isTrialModerator = false;
+		let isStaff = false;
 		let isDeveloper = false;
 		let isLegends = false;
 		try {
@@ -120,6 +121,7 @@ class UserInfo extends Command {
 			isModerator = supportGuild.members.cache.get(member.user.id).roles.cache.some(role => role.id === bot.config.Staff.ModeratorRole);
 			isTrialModerator = supportGuild.members.cache.get(member.user.id).roles.cache.some(role => role.id === bot.config.Staff.TrialModeratorRole);
 			isDeveloper = supportGuild.members.cache.get(member.user.id).roles.cache.some(role => role.id === bot.config.Staff.DeveloperRole);
+			isStaff = supportGuild.members.cache.get(member.user.id).roles.cache.some(role => role.id === bot.config.Staff.StaffRole);
 			isLegends = supportGuild.members.cache.get(member.user.id).roles.cache.some(role => role.id === bot.config.Staff.LegendsRole);
 		} catch (err) {
 		}
@@ -159,7 +161,7 @@ class UserInfo extends Command {
 		}
 
 		// Staff only vales
-		if (isOwner | isAdministrator | isOfficialBots | isModerator | isDiscordmanager | isCommunitymanager | isModerator | isTrialModerator | isDeveloper | isLegends) {
+		if (isOwner | isAdministrator | isOfficialBots | isModerator | isDiscordmanager | isCommunitymanager | isModerator | isTrialModerator | isDeveloper | isStaff | isLegends) {
 			const owner = isOwner ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.OwnerRole).name}` : '';
 			const officialbots = isOfficialBots ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.OfficialBotsRole).name}` : '';
 			const discordmanager = isDiscordmanager ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.DiscordManagerRole).name}` : '';
@@ -168,8 +170,9 @@ class UserInfo extends Command {
 			const mod = isModerator ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.ModeratorRole).name}` : '';
 			const trialmod = isTrialModerator ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.TrialModeratorRole).name}` : '';
 			const developers = isDeveloper ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.DeveloperRole).name}` : '';
+			const staff = isStaff ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.StaffRole).name}` : '';
 			const legends = isLegends ? `${supportGuild.roles.cache.find(role => role.id === bot.config.Staff.LegendsRole).name}` : '';
-			embed.addFields({ name: bot.translate('guild/user-info:BOT', {}, guild.settings?.Language), value: `${owner} ${discordmanager} ${officialbots} ${communitymanager} ${admin} ${mod} ${trialmod} ${developers} ${legends}`, inline: true });
+			embed.addFields({ name: bot.translate('guild/user-info:BOT', {}, guild.settings?.Language), value: `${owner} ${discordmanager} ${officialbots} ${communitymanager} ${admin} ${mod} ${trialmod} ${developers} ${staff} ${legends}`, inline: true });
 		}
 		return embed;
 	}
